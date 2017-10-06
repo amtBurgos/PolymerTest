@@ -11,7 +11,6 @@
 				position: fixed;
 				top: 50%;
 				left: 50%;
-
 			}
 
 			paper-card {
@@ -19,7 +18,7 @@
 			}
 		</style>
 
-		<iron-ajax auto url="https://jsonplaceholder.typicode.com/comments/"
+		<iron-ajax auto url="https://jsonplaceholder.typicode.com/users/"
 			handle-as="json"
 			last-response="{{data}}"
 			loading="{{load}}">
@@ -28,17 +27,20 @@
 		<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
 
 		<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
-		<!-- {{item}} and {{index}} can be used in this binding scope -->
-			<paper-card heading="[[item.email]]" elevation="4" animated-shadow="true" animated="true">
+			<paper-card heading="[[item.name]]" elevation="1" animated-shadow="true" animated="true">
 			  <div class="card-content">
-			  	[[item.body]] <br>
-			  	<small>[[item.name]]</small>
+			  	[[item.username]] <br>
+			  	<small>[[item.address.street]]</small> <br>
+			  	<small>[[item.email]]</small> <br>
+			  	<small>[[item.name]]</small> <br>
+			  	<small><a href="[[item.website]]"></a></small>
 			  </div>
 			  <div class="card-actions">
-			  	  <paper-button raised on-click="openToast" data-args="[[item.email]]" > Send email</paper-button>
+			  	  <paper-button raised on-tap="openToast"> Send email</paper-button>
 			  </div>
 			</paper-card>
 		</template>
+		<paper-toast id="myToast" text=" "></paper-toast>
 	</template>
 	<script>
 		Polymer({
@@ -47,7 +49,9 @@
 				console.log("Card created")
 			},
 			openToast: function(ev){
-				alert("Message sent to "+ ev.target.dataArgs)
+				//alert("Message sent to "+ ev.target.dataArgs)
+				this.$.myToast.text = "Message sent to: " + ev.model.item.email;
+				this.$.myToast.open();
 			}
 		});	
 	</script>
