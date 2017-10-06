@@ -22,6 +22,10 @@
 			margin: 10px 10px;
 		}
 
+		paper-icon-button {
+			float: right;
+			color: var(--paper-grey-600);
+		}
 
 	</style>
 
@@ -46,7 +50,7 @@
 			<div class="card-actions">
 				<div class="horizontal justified">
 					<paper-button on-tap="openToast"> Send email</paper-button>
-					<paper-button>Map</paper-button>
+					<paper-icon-button icon="maps:place"></paper-icon-button>
 				</div>
 			</div>
 		</paper-card>
