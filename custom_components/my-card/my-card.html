@@ -2,64 +2,69 @@
 
 <dom-module id="my-card">
 	<template>
-		<style>
-			:host {
-				display: block;
-				align-items: center;
-				justify-content: center;
-			}
+		<style is="custom-style" include="iron-flex iron-positioning iron-flex-alignment">
+		:host {
+			display: block;
+			align-items: center;
+			justify-content: center;
+		}
 
-			paper-spinner {
-				position: fixed;
-				top: 50%;
-				left: 50%;
-			}
+		paper-spinner {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+		}
 
-			paper-card {
-				display: block;
-				width: 100%;
-				max-width: 500px;
-				margin-top: 20px;
-				margin-bottom: 20px;
-				margin-right: 20px;
-				margin-left: :200px;
-			}
-		</style>
+		paper-card {
+			display: block;
+			width: 800%;
+			max-width: 500px;
+			margin: 10px 10px;
+		}
 
-		<iron-ajax auto url="https://jsonplaceholder.typicode.com/users/"
-			handle-as="json"
-			last-response="{{data}}"
-			loading="{{load}}">
-		</iron-ajax>
 
-		<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
+	</style>
 
-		<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
-			<paper-card heading="[[item.name]]" elevation="5" animated-shadow="true" animated="true">
-			  <div class="card-content">
-			  	[[item.username]] <br>
-			  	<small>[[item.address.street]]</small> <br>
-			  	<small>[[item.email]]</small> <br>
-			  	<small>[[item.name]]</small> <br>
-			  	<small><a href="[[item.website]]"></a></small>
-			  </div>
-			  <div class="card-actions">
-			  	  <paper-button raised on-tap="openToast"> Send email</paper-button>
-			  </div>
-			</paper-card>
-		</template>
-		<paper-toast id="myToast" text=" "></paper-toast>
-	</template>
-	<script>
-		Polymer({
-			is: 'my-card',
-			created: ()=> {
-				console.log("Card created")
-			},
-			openToast: function(ev){
-				this.$.myToast.text = "Message sent to: " + ev.model.item.email;
-				this.$.myToast.open();
-			}
-		});	
-	</script>
+	<iron-ajax auto url="https://jsonplaceholder.typicode.com/users/"
+	handle-as="json"
+	last-response="{{data}}"
+	loading="{{load}}">
+</iron-ajax>
+
+<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
+
+<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
+	<div class="horizontal layout center-justified card-container">
+		<paper-card heading="[[item.name]]" elevation="5" animated-shadow="true" animated="true">
+			<div class="card-content">
+				[[item.username]] <br>
+				<small>[[item.address.street]]</small> <br>
+				<small>[[item.email]]</small> <br>
+				<small>[[item.name]]</small> <br>
+				<small><a href="[[item.website]]"></a></small>
+			</div>
+			<div class="card-actions">
+				<div class="horizontal justified">
+					<paper-button on-tap="openToast"> Send email</paper-button>
+					<paper-button>Map</paper-button>
+				</div>
+			</div>
+		</paper-card>
+	</div>
+</template>
+<paper-toast id="myToast" text=" "></paper-toast>
+</template>
+<script>
+	Polymer({
+		is: 'my-card',
+		created: ()=> {
+			console.log("Card created")
+		},
+		openToast: function(ev){
+			this.$.myToast.close();
+			this.$.myToast.text = "Message sent to: " + ev.model.item.email;
+			this.$.myToast.open();
+		}
+	});	
+</script>
 </dom-module>
