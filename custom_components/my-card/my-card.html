@@ -23,7 +23,10 @@
 		}
 
 		paper-icon-button {
-			float: right;
+			float: right;			
+		}
+
+		iron-icon, paper-icon-button {
 			color: var(--paper-grey-600);
 		}
 
@@ -39,18 +42,25 @@
 
 <template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
 	<div class="horizontal layout center-justified card-container">
-		<paper-card heading="[[item.name]]" elevation="5" animated-shadow="true" animated="true">
+		<paper-card heading="[[item.name]] ([[item.username]])" elevation="5" animated-shadow="true" animated="true">
 			<div class="card-content">
-				[[item.username]] <br>
-				<small>[[item.address.street]]</small> <br>
-				<small>[[item.email]]</small> <br>
-				<small>[[item.name]]</small> <br>
-				<small><a href="[[item.website]]"></a></small>
+				<iron-icon icon="icons:work"></iron-icon> 
+				<small>[[item.company.name]]</small> <br>
+					
+				<iron-icon icon="hardware:phone-android"></iron-icon> 
+				<small>[[item.phone]]</small> <br>
+				
+				<iron-icon icon="social:location-city"></iron-icon> 
+				<small>[[item.address.street]], [[item.address.suite]], [[item.address.city]]</small> <br>				
+
 			</div>
 			<div class="card-actions">
 				<div class="horizontal justified">
-					<paper-button on-tap="openToast"> Send email</paper-button>
-					<paper-icon-button icon="maps:place"></paper-icon-button>
+					<paper-button title="Send email to contact" on-tap="openToast"> Send email</paper-button>
+					
+					<paper-icon-button title="See on maps" icon="maps:place"></paper-icon-button>
+					
+					<a rel="external" target="_blank" href="https://www.google.com"><paper-icon-button title="Personal webpage" icon="av:web"></paper-icon-button></a>
 				</div>
 			</div>
 		</paper-card>
