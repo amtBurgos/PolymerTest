@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			paper-spinner {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+
+			}
+
+			paper-card {
+				width: 100%;
+			}
+		</style>
+
+		<iron-ajax auto url="https://jsonplaceholder.typicode.com/comments/"
+			handle-as="json"
+			last-response="{{data}}"
+			loading="{{load}}">
+		</iron-ajax>
+
+		<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
+
+		<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
+		<!-- {{item}} and {{index}} can be used in this binding scope -->
+			<paper-card heading="[[item.email]]" elevation="4" animated-shadow="true" animated="true">
+			  <div class="card-content">
+			  	[[item.body]] <br>
+			  	<small>[[item.name]]</small>
+			  </div>
+			  <div class="card-actions">
+			  	  <paper-button raised on-click="openToast" data-args="[[item.email]]" > Send email</paper-button>
+			  </div>
+			</paper-card>
+		</template>
+	</template>
+	<script>
+		Polymer({
+			is: 'my-card',
+			created: ()=> {
+				console.log("Card created")
+			},
+			openToast: function(ev){
+				alert("Message sent to "+ ev.target.dataArgs)
+			}
+		});
+
+	
+	</script>
+</dom-module>

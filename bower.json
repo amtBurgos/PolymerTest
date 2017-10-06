@@ -1,0 +1,25 @@
+{
+  "name": "Project1",
+  "authors": [
+    "Andrés Miguel Terán"
+  ],
+  "description": "Project 1",
+  "main": "",
+  "keywords": [
+    "polymer"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-elements": "PolymerElements/iron-elements#^1.0.10",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7",
+    "gold-elements": "PolymerElements/gold-elements#^1.0.1"
+  }
+}

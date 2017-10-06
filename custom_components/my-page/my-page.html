@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../my-card/my-card.html">
+
+<dom-module id="my-page">
+	<template>
+		<style>
+		:host {
+			display: block;
+		}
+
+		paper-toolbar.drawer {
+			background-color: var(--paper-pink-400)
+		}
+		paper-toolbar.main {
+			background-color: var(--paper-pink-600)
+		}
+		div#dd {
+			background-color: var(--paper-grey-100)
+		}
+	</style>
+
+	<paper-drawer-panel>
+		<paper-header-panel id="dd" drawer>				
+			<paper-toolbar class="drawer" >
+				<div>
+					<span class="title"><small>Menu</small></span>
+				</div>
+			</paper-toolbar>
+			<paper-menu class="list">
+				<paper-item>New item</paper-item>
+				<paper-item>New item</paper-item>
+			</paper-menu>
+		</paper-header-panel>
+		<paper-header-panel main>				
+			<paper-toolbar class="main">
+				<paper-icon-button paper-drawer-toggle icon="menu">
+				</paper-icon-button> 
+				<div><span class="title">[[title]]</span></div>
+			</paper-toolbar>
+			<my-card></my-card>
+		</paper-header-panel>
+	</paper-drawer-panel>
+
+
+</template>
+
+<script>
+	Polymer({
+		is: "my-page",
+		properties: {
+			title: {
+				type: String,
+				value: "My page"
+			}
+		},
+		created: ()=>{
+			console.log("Paper toolbar created")
+		}
+	})
+</script>
+
+</dom-module>
