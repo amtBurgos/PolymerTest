@@ -3,82 +3,105 @@
 <dom-module id="my-card">
 	<template>
 		<style is="custom-style" include="iron-flex iron-positioning iron-flex-alignment">
-		:host {
-			display: block;
-			align-items: center;
-			justify-content: center;
-		}
+			:host {
+				display: block;
+				align-items: center;
+				justify-content: center;
+			}
 
-		paper-spinner {
-			position: fixed;
-			top: 50%;
-			left: 50%;
-		}
+			paper-spinner {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+			}
 
-		paper-card {
-			display: block;
-			width: 800%;
-			max-width: 500px;
-			margin: 10px 10px;
-		}
+			paper-card {
+				display: block;
+				width: 800%;
+				max-width: 500px;
+				margin: 10px 10px;
+			}
 
-		paper-icon-button {
-			float: right;			
-		}
+			paper-icon-button {
+				float: right;			
+			}
 
-		iron-icon, paper-icon-button {
-			color: var(--paper-grey-600);
-		}
+			iron-icon, paper-icon-button {
+				color: var(--paper-grey-600);
+				margin-left: 5px;
+			}
 
-	</style>
+			paper-dialog.size-position {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				/*width: 100%;
+				max-width: 150px;
+				max-height: 300px;*/
+				overflow: auto;
+			}
+		</style>
+		<iron-ajax auto url="https://jsonplaceholder.typicode.com/users/" handle-as="json" last-response="{{data}}"	loading="{{load}}"></iron-ajax>
+		<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
 
-	<iron-ajax auto url="https://jsonplaceholder.typicode.com/users/"
-	handle-as="json"
-	last-response="{{data}}"
-	loading="{{load}}">
-</iron-ajax>
-
-<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
-
-<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
-	<div class="horizontal layout center-justified card-container">
-		<paper-card heading="[[item.name]] ([[item.username]])" elevation="5" animated-shadow="true" animated="true">
-			<div class="card-content">
-				<iron-icon icon="icons:work"></iron-icon> 
-				<small>[[item.company.name]]</small> <br>
-					
-				<iron-icon icon="hardware:phone-android"></iron-icon> 
-				<small>[[item.phone]]</small> <br>
-				
-				<iron-icon icon="social:location-city"></iron-icon> 
-				<small>[[item.address.street]], [[item.address.suite]], [[item.address.city]]</small> <br>				
-
+		<paper-dialog id="myDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+			<h2>Email to: [[lastEmail]]</h2>
+			<div>
+				<p>Write your doubts and opinions below:</p><br>
+				<iron-autogrow-textarea style="max-height: 100px;" placeholder="Write your email"></iron-autogrow-textarea>
 			</div>
-			<div class="card-actions">
-				<div class="horizontal justified">
-					<paper-button title="Send email to contact" on-tap="openToast"> Send email</paper-button>
-					
-					<paper-icon-button title="See on maps" icon="maps:place"></paper-icon-button>
-					
-					<a rel="external" target="_blank" href="https://www.google.com"><paper-icon-button title="Personal webpage" icon="av:web"></paper-icon-button></a>
-				</div>
+		</paper-dialog>
+		<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
+			<div class="horizontal layout center-justified card-container">
+				<paper-card heading="[[item.name]] ([[item.username]])" elevation="5" animated-shadow="true" animated="true">
+					<div class="card-content">
+						<p>
+							<iron-icon icon="icons:work"></iron-icon>
+							<small>[[item.company.name]]</small>
+						</p>
+
+						<p>
+							<iron-icon icon="hardware:phone-android"></iron-icon>
+							<small>[[item.phone]]</small> 
+						</p>
+
+						<p>
+							<iron-icon icon="social:location-city"></iron-icon> 
+							<small>[[item.address.street]], [[item.address.suite]], [[item.address.city]]</small>
+						</p>
+					</div>
+					<div class="card-actions">
+						<div class="horizontal justified">
+							<paper-button title="Send email to contact" raised on-tap="openDialog">Send email</paper-button>
+							<paper-icon-button title="See on maps" icon="maps:place"></paper-icon-button>
+							<a rel="external" target="_blank" href="https://www.google.com">
+								<paper-icon-button title="Personal webpage" icon="av:web"></paper-icon-button>
+							</a>
+						</div>
+					</div>
+				</paper-card>
 			</div>
-		</paper-card>
-	</div>
-</template>
-<paper-toast id="myToast" text=" "></paper-toast>
-</template>
-<script>
-	Polymer({
-		is: 'my-card',
-		created: ()=> {
-			console.log("Card created")
-		},
-		openToast: function(ev){
-			this.$.myToast.close();
-			this.$.myToast.text = "Message sent to: " + ev.model.item.email;
-			this.$.myToast.open();
-		}
-	});	
-</script>
+		</template>
+		<paper-toast id="myToast" text=" "></paper-toast>
+	</template>
+	<script>
+		Polymer({
+			is: 'my-card',
+			created: ()=> {
+				console.log("Card created");
+			},
+			properties: {
+				lastEmail: {
+					type: String,
+					value: "Nothing",
+					notify: true,
+					reflectToAttribute: true,
+				}
+			},
+			openDialog: function(ev){
+				this.lastEmail = ev.model.item.email;
+				this.$.myDialog.open();
+			}
+		});	
+	</script>
 </dom-module>
