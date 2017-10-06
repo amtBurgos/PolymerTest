@@ -5,6 +5,8 @@
 		<style>
 			:host {
 				display: block;
+				align-items: center;
+				justify-content: center;
 			}
 
 			paper-spinner {
@@ -14,7 +16,13 @@
 			}
 
 			paper-card {
+				display: block;
 				width: 100%;
+				max-width: 500px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				margin-right: 20px;
+				margin-left: :200px;
 			}
 		</style>
 
@@ -27,7 +35,7 @@
 		<paper-spinner active="{{load}}" alt="loading data..."></paper-spinner>
 
 		<template is="dom-repeat" items="[[data]]" as="item" index-as="index" >
-			<paper-card heading="[[item.name]]" elevation="1" animated-shadow="true" animated="true">
+			<paper-card heading="[[item.name]]" elevation="5" animated-shadow="true" animated="true">
 			  <div class="card-content">
 			  	[[item.username]] <br>
 			  	<small>[[item.address.street]]</small> <br>
@@ -49,7 +57,6 @@
 				console.log("Card created")
 			},
 			openToast: function(ev){
-				//alert("Message sent to "+ ev.target.dataArgs)
 				this.$.myToast.text = "Message sent to: " + ev.model.item.email;
 				this.$.myToast.open();
 			}
